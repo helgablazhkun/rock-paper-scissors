@@ -1,8 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using rock_paper_scissors.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<GameDbContext>(o =>
+{
+    o.UseInMemoryDatabase("Game");
+});
 
 var app = builder.Build();
 
