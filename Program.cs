@@ -10,6 +10,7 @@ builder.Services.AddDbContext<GameDbContext>(o =>
 {
     o.UseInMemoryDatabase("Game");
 });
+builder.Services.AddSingleton<IGameService, GameService>();
 
 var app = builder.Build();
 
