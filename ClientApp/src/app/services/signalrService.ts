@@ -7,6 +7,7 @@ export class SignalrService {
         ) { }
 
     declare hubConnection: signalR.HubConnection;
+    private hubMethods: string[] = [];
 
     startConnection = () => {
       this.hubConnection = new signalR.HubConnectionBuilder()
@@ -24,15 +25,21 @@ export class SignalrService {
       .catch((err: any) => console.log('Error while starting connection: ' + err))
   }
 
-  askServer() {
-    this.hubConnection.invoke("askServer", "hey")
+  invoke = (methodName: string, ...args: any[]) => {
+    this.hubConnection.invoke(methodName, ...args)
         .catch(err => console.error(err));
   }
 
-  askServerListener() {
-    this.hubConnection.on("askServerResponse", (someText) => {
-        console.log(someText);
-  })
-}
+  subscribe = (methodName: string, callback: (...args: any[]) => void) => {
+    if(!this.hubMethods.includes(methodName)){
+        this.hubMethods.push(methodName);
+    }
+
+    this.hubConnection.on(methodName, callback);
+  }
+
+  unsubscribe(methodName: string) {
+    this.hubConnection.off(methodName);
+  };
 
 }

@@ -1,50 +1,97 @@
 using rock_paper_scissors.Data;
 
-public interface IGameService
+namespace rock_paper_scissors.Services
 {
-    GameResult GetGameRoundResult(Weapon player1Choice, Weapon player2Choice);
-    GameResult GetGameResult(GameSession player1Session, GameSession player2Session);
-}
-
-public class GameService : IGameService
-{
-    public GameResult GetGameRoundResult(Weapon player1Choice, Weapon player2Choice)
+    public interface IGameService
     {
-        return _gameResults
-            .Single(gr => gr.player1Choice == player1Choice && gr.player2Choice == player2Choice)
-            .result;
+        GameResult GetGameRoundResult(Weapon playerChoice, Weapon opponentChoice);
+        bool IsGameFinished(GameSession playerSession, GameSession opponentSession);
+        GameResult GetGameResult(GameSession playerSession, GameSession opponentSession);
     }
 
-    public GameResult GetGameResult(GameSession player1Session, GameSession player2Session)
+    public class GameService : IGameService
     {
-        List<GameResult> playerResults = new () {
-          GetGameRoundResult(player1Session.WeaponRound1, player2Session.WeaponRound1),
-          GetGameRoundResult(player1Session.WeaponRound2, player2Session.WeaponRound2),
-          GetGameRoundResult(player1Session.WeaponRound3, player2Session.WeaponRound3)
-        };
-
-        if(player1Session.WeaponRound4.HasValue && player2Session.WeaponRound4.HasValue){
-          playerResults.Add(GetGameRoundResult(player1Session.WeaponRound4.Value, player2Session.WeaponRound4.Value));
-        }
-
-        if(player1Session.WeaponRound5.HasValue && player2Session.WeaponRound5.HasValue){
-          playerResults.Add(GetGameRoundResult(player1Session.WeaponRound5.Value, player2Session.WeaponRound5.Value));
-        }
-
-        return playerResults.Where(r => r == GameResult.Win).Count() > 2 ? GameResult.Win: GameResult.Lose;
-    }
-
-    private readonly List<(Weapon player1Choice, Weapon player2Choice, GameResult result)> _gameResults =
-        new()
+        public GameResult GetGameRoundResult(Weapon playerChoice, Weapon opponentChoice)
         {
-            (Weapon.Rock, Weapon.Rock, GameResult.Draw),
-            (Weapon.Rock, Weapon.Paper, GameResult.Lose),
-            (Weapon.Rock, Weapon.Scissors, GameResult.Win),
-            (Weapon.Paper, Weapon.Rock, GameResult.Win),
-            (Weapon.Paper, Weapon.Paper, GameResult.Draw),
-            (Weapon.Paper, Weapon.Scissors, GameResult.Lose),
-            (Weapon.Scissors, Weapon.Rock, GameResult.Lose),
-            (Weapon.Scissors, Weapon.Paper, GameResult.Win),
-            (Weapon.Scissors, Weapon.Scissors, GameResult.Draw),
-        };
+            return _gameResults
+                .Single(gr => gr.player1Choice == playerChoice && gr.player2Choice == opponentChoice)
+                .result;
+        }
+
+        public bool IsGameFinished(GameSession playerSession, GameSession opponentSession)
+        {
+          List<GameResult> playerResults = GetPlayerGameResult(playerSession, opponentSession);
+          int draws = playerResults
+                        .Where(r => r == GameResult.Draw).Count();
+
+          if(draws == 5)
+          {
+            return true;
+          }
+
+          int playerWins = playerResults
+                        .Where(r => r == GameResult.Win).Count();
+          int oppositeWins = GetPlayerGameResult(opponentSession, playerSession)
+                        .Where(r => r == GameResult.Win).Count();
+
+          return playerWins == 3 || oppositeWins == 3;
+        }
+
+        public GameResult GetGameResult(GameSession playerSession, GameSession opponentSession)
+        {
+            List<GameResult> playerResults = GetPlayerGameResult(playerSession, opponentSession);
+            int draws = playerResults
+                        .Where(r => r == GameResult.Draw).Count();
+
+            if(draws == 5)
+            {
+              return GameResult.Draw;
+            }
+
+            int playerScore = playerResults
+                        .Where(r => r == GameResult.Win).Count();
+
+            return playerScore >= 3 ? GameResult.Win : GameResult.Lose;
+        }
+
+        private List<GameResult> GetPlayerGameResult(GameSession playerSession, GameSession opponentSession) {
+            List<GameResult> playerResults = new ();
+
+            if(playerSession.WeaponRound1.HasValue && opponentSession.WeaponRound1.HasValue){
+              playerResults.Add(GetGameRoundResult(playerSession.WeaponRound1.Value, opponentSession.WeaponRound1.Value));
+            }
+
+            if(playerSession.WeaponRound2.HasValue && opponentSession.WeaponRound2.HasValue){
+              playerResults.Add(GetGameRoundResult(playerSession.WeaponRound2.Value, opponentSession.WeaponRound2.Value));
+            }
+
+            if(playerSession.WeaponRound3.HasValue && opponentSession.WeaponRound3.HasValue){
+              playerResults.Add(GetGameRoundResult(playerSession.WeaponRound3.Value, opponentSession.WeaponRound3.Value));
+            }
+
+            if(playerSession.WeaponRound4.HasValue && opponentSession.WeaponRound4.HasValue){
+              playerResults.Add(GetGameRoundResult(playerSession.WeaponRound4.Value, opponentSession.WeaponRound4.Value));
+            }
+
+            if(playerSession.WeaponRound5.HasValue && opponentSession.WeaponRound5.HasValue){
+              playerResults.Add(GetGameRoundResult(playerSession.WeaponRound5.Value, opponentSession.WeaponRound5.Value));
+            }
+
+            return playerResults;
+        }
+
+        private readonly List<(Weapon player1Choice, Weapon player2Choice, GameResult result)> _gameResults =
+            new()
+            {
+                (Weapon.Rock, Weapon.Rock, GameResult.Draw),
+                (Weapon.Rock, Weapon.Paper, GameResult.Lose),
+                (Weapon.Rock, Weapon.Scissors, GameResult.Win),
+                (Weapon.Paper, Weapon.Rock, GameResult.Win),
+                (Weapon.Paper, Weapon.Paper, GameResult.Draw),
+                (Weapon.Paper, Weapon.Scissors, GameResult.Lose),
+                (Weapon.Scissors, Weapon.Rock, GameResult.Lose),
+                (Weapon.Scissors, Weapon.Paper, GameResult.Win),
+                (Weapon.Scissors, Weapon.Scissors, GameResult.Draw),
+            };
+    }
 }

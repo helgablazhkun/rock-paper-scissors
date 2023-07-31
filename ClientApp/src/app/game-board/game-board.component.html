@@ -1,0 +1,28 @@
+<div class="score-board">
+  <span class="round" *ngIf="game.status === 'InProgress'">Round: {{game.round}} / 5</span>
+  <span class="round" *ngIf="game.status === 'Finished'">Game over</span>
+  <div class="badge nick nick-left">{{player.nick}}</div>
+  <div class="badge nick nick-rigth">Opponent</div>
+  <span>{{player.score}}</span>:<span>{{opponentScore}}</span>
+</div>
+
+<div class="choices" *ngIf="game.status === 'InProgress'">
+  <app-weapon [disabled]="waitingForOpponent" (shot)="makeChoice($event)" [weapon]="'Rock'"/>
+  <app-weapon [disabled]="waitingForOpponent" (shot)="makeChoice($event)" [weapon]="'Scissors'"/>
+  <app-weapon [disabled]="waitingForOpponent" (shot)="makeChoice($event)" [weapon]="'Paper'"/>
+</div>
+
+<p class="message" *ngIf="game.status === 'InProgress' && !waitingForOpponent">Make your choice for round #{{game.round}}!</p>
+<p class="message" *ngIf="game.status === 'InProgress' && waitingForOpponent">Your choice is {{playerWeapon}}</p>
+<p class="message" *ngIf="game.status === 'InProgress' && waitingForOpponent">Wait...</p>
+<div *ngIf="game.status == 'InProgress' && opponentMadeChoice">
+  <p class="message">Opponent weapon is {{opponentWeapon}}</p>
+  <p class="message" *ngIf="game.roundResult !== 'Draw'">You {{game.roundResult}} round #{{game.round-1}}!</p>
+  <p class="message" *ngIf="game.roundResult === 'Draw'">Draw in round {{game.round-1}}!</p>
+</div>
+
+<div *ngIf="game.status == 'Finished'">
+  <p class="message" *ngIf="game.gameResult !== 'Draw'">You {{game.gameResult}} this game!</p>
+  <p class="message" *ngIf="game.gameResult === 'Draw'">It is a draw!</p>
+  <app-game-statistic [gameStatistic]="gameStatistic"/>
+</div>

@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using rock_paper_scissors.Data;
+using rock_paper_scissors.Hubs;
+using rock_paper_scissors.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,7 @@ builder.Services.AddSignalR(options =>
 
 
 builder.Services.AddSingleton<IGameService, GameService>();
+builder.Services.AddScoped<IGameDataService, GameDataService>();
 
 var app = builder.Build();
 

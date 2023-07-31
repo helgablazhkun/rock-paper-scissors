@@ -12,10 +12,11 @@ namespace rock_paper_scissors.Data
     [Owned]
     public class GameSession
     {
+        public string SessionId { get; set;}
         public string Nick { get; set; }
-        public Weapon WeaponRound1 { get; set; }
-        public Weapon WeaponRound2  { get; set; }
-        public Weapon WeaponRound3  { get; set; }
+        public Weapon? WeaponRound1 { get; set; }
+        public Weapon? WeaponRound2  { get; set; }
+        public Weapon? WeaponRound3  { get; set; }
         public Weapon? WeaponRound4  { get; set; }
         public Weapon? WeaponRound5  { get; set; }
     }

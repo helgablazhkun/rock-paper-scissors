@@ -1,31 +1,29 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SignalrService } from './singlr.service';
+import { GameService } from './services/gameService';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit, OnDestroy {
-  /**
-   *
-   */
+
   constructor(
-    public signalrService: SignalrService
+    public gameService: GameService
   )
   {}
 
-  title = 'app';
+  title = 'Rock Paper Scissors';
 
   ngOnInit(): void {
-    this.signalrService.startConnection();
+    this.gameService.startConnection();
 
+    //TODO: remove
     setTimeout(() => {
-      this.signalrService.askServerListener();
-      this.signalrService.askServer();
+      this.gameService.testConnection();
     }, 2000);
   }
 
   ngOnDestroy() {
-    this.signalrService.hubConnection.off("askServerResponse");
+    this.gameService.unsubscribe('AskServerResponse');
   }
 }

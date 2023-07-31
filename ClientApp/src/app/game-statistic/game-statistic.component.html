@@ -1,0 +1,32 @@
+<h1 id="tableLabel">Game Statistic</h1>
+
+<table class='table table-striped' aria-labelledby="tableLabel">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Round 1</th>
+      <th>Round 2</th>
+      <th>Round 3</th>
+      <th>Round 4</th>
+      <th>Round 5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ gameStatistic.playerSession.nick }}</td>
+      <td>{{ gameStatistic.playerSession.weaponRound1 }}</td>
+      <td>{{ gameStatistic.playerSession.weaponRound2 }}</td>
+      <td>{{ gameStatistic.playerSession.weaponRound3 }}</td>
+      <td>{{ gameStatistic.playerSession.weaponRound4 }}</td>
+      <td>{{ gameStatistic.playerSession.weaponRound5 }}</td>
+    </tr>
+    <tr>
+      <td>{{ gameStatistic.opponentSession.nick }}</td>
+      <td>{{ gameStatistic.opponentSession.weaponRound1 }}</td>
+      <td>{{ gameStatistic.opponentSession.weaponRound2 }}</td>
+      <td>{{ gameStatistic.opponentSession.weaponRound3 }}</td>
+      <td>{{ gameStatistic.opponentSession.weaponRound4 }}</td>
+      <td>{{ gameStatistic.opponentSession.weaponRound5 }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,11 @@
+.weapon {
+  display: inline-block;
+  border: 4px solid white;
+  border-radius: 50%;
+  margin: 0 20px;
+}
+
+.weapon:hover {
+  cursor: pointer;
+  background:rgba(111, 134, 223, 0.898);
+}
