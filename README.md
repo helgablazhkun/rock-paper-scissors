@@ -24,3 +24,6 @@ In order to run the game in your host system you will need to have [Node.js](htt
 * Continue make choice for both clients.
 * The game continues until the compete victory of one of the Clients (3 wins) or draw.
 * When game is finish table with game statistic is shown.
+
+## Demo (Video) 
+  Demo is [here](https://www.youtube.com/watch?v=NHtYkREJvfM) 
