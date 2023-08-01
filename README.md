@@ -26,4 +26,4 @@ In order to run the game in your host system you will need to have [Node.js](htt
 * When game is finish table with game statistic is shown.
 
 ## Demo (Video) 
-  Demo is [here](https://www.youtube.com/watch?v=NHtYkREJvfM) 
+  Demo is [here](https://www.youtube.com/watch?v=jBkBG33WoO8) 
