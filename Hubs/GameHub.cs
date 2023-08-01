@@ -48,8 +48,8 @@ namespace rock_paper_scissors.Hubs
                     throw new Exception("Player2 is not join");
                 }
 
-                await Clients.Client(existingGame.Player1.SessionId).SendAsync(GameEvents.StartTheGame);
-                await Clients.Client(existingGame.Player2.SessionId).SendAsync(GameEvents.StartTheGame);
+                await Clients.Client(existingGame.Player1.SessionId).SendAsync(GameEvents.StartTheGame, existingGame.Player2.Nick);
+                await Clients.Client(existingGame.Player2.SessionId).SendAsync(GameEvents.StartTheGame, existingGame.Player1.Nick);
             }
         }
 

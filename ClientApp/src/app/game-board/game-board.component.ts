@@ -10,6 +10,7 @@ import { GameService } from '../services/gameService';
 export class GameBoardComponent {
 
   @Input() player!: Player;
+  @Input() opponent!: Player;
   @Input() game!: Game;
   declare opponentWeapon: Weapon;
   declare playerWeapon: Weapon;

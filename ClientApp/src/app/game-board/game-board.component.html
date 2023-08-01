@@ -2,7 +2,7 @@
   <span class="round" *ngIf="game.status === 'InProgress'">Round: {{game.round}} / 5</span>
   <span class="round" *ngIf="game.status === 'Finished'">Game over</span>
   <div class="badge nick nick-left">{{player.nick}}</div>
-  <div class="badge nick nick-rigth">Opponent</div>
+  <div class="badge nick nick-rigth">{{opponent.nick}}</div>
   <span>{{player.score}}</span>:<span>{{opponentScore}}</span>
 </div>
 

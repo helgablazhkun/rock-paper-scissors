@@ -14,6 +14,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     score: 0
   };
 
+  opponent: Player = {
+    nick: '',
+    score: 0
+  };
+
   game: Game = {
     status: 'NotStarted',
     round: 1,
@@ -49,7 +54,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.waitingForAnotherPlayer = true;
     })
 
-    this.gameService.subscribe('StartTheGame', () => {
+    this.gameService.subscribe('StartTheGame', (opponentNick) => {
+      this.opponent.nick = opponentNick;
       this.game.status= 'InProgress';
     })
   }
