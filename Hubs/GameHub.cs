@@ -90,17 +90,8 @@ namespace rock_paper_scissors.Hubs
         }
 
         private async Task NotifyPlayerWithGameResult(GameSession playerSession, GameSession opponentSession){
-            var playerResult = _gameService.GetGameResult(
-                playerSession,
-                opponentSession).ToString();
-
             await Clients.Client(playerSession.SessionId)
-                .SendAsync(GameEvents.GameEnd,
-                new {
-                        PlayerResult = playerResult,
-                        PlayerSession = playerSession.ConvertWeaponToClient(),
-                        OpponentSession = opponentSession.ConvertWeaponToClient()
-                    });
+                .SendAsync(GameEvents.GameEnd, _gameService.GetGameStatistic(playerSession, opponentSession));
         }
 
     }

@@ -1,6 +1,6 @@
 import { Component, Inject, Input } from '@angular/core';
 import { Player } from '../models/player';
-import { Game, Weapon, GameResult, GameStatistic } from '../models/game';
+import { Game, Weapon, GameResult, FinalGameStatistic } from '../models/game';
 import { GameService } from '../services/gameService';
 @Component({
   selector: 'app-game-board',
@@ -14,7 +14,7 @@ export class GameBoardComponent {
   @Input() game!: Game;
   declare opponentWeapon: Weapon;
   declare playerWeapon: Weapon;
-  declare gameStatistic: GameStatistic;
+  declare gameStatistic: FinalGameStatistic;
   opponentMadeChoice = false;
   opponentScore = 0;
   choiceIsMade = false;
@@ -61,10 +61,10 @@ export class GameBoardComponent {
       this.choiceIsMade = false;
     })
 
-    this.gameService.subscribe('GameEnd', (gameStatistic: GameStatistic) => {
+    this.gameService.subscribe('GameEnd', (finalGameStatistic: FinalGameStatistic) => {
       this.game.status = 'Finished';
-      this.game.gameResult = gameStatistic.playerResult;
-      this.gameStatistic = gameStatistic;
+      this.game.gameResult = finalGameStatistic.playerFinalResult;
+      this.gameStatistic = finalGameStatistic;
     })
   }
 }

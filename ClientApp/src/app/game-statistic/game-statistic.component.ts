@@ -1,5 +1,5 @@
-import { Component, Inject, Input } from '@angular/core';
-import { GameStatistic } from '../models/game';
+import { Component, Input } from '@angular/core';
+import { FinalGameStatistic } from '../models/game';
 
 @Component({
   selector: 'app-game-statistic',
@@ -7,7 +7,7 @@ import { GameStatistic } from '../models/game';
 })
 export class GameStatisticComponent {
 
-  @Input() gameStatistic!: GameStatistic;
+  @Input() gameStatistic!: FinalGameStatistic;
   constructor() {
   }
 }

@@ -13,20 +13,28 @@
   </thead>
   <tbody>
     <tr>
-      <td>{{ gameStatistic.playerSession.nick }}</td>
-      <td>{{ gameStatistic.playerSession.weaponRound1 }}</td>
-      <td>{{ gameStatistic.playerSession.weaponRound2 }}</td>
-      <td>{{ gameStatistic.playerSession.weaponRound3 }}</td>
-      <td>{{ gameStatistic.playerSession.weaponRound4 }}</td>
-      <td>{{ gameStatistic.playerSession.weaponRound5 }}</td>
+      <td>{{ gameStatistic.playerNick }}</td>
+      <td>{{ gameStatistic.round1Result.playerWeapon }}</td>
+      <td>{{ gameStatistic.round2Result.playerWeapon }}</td>
+      <td>{{ gameStatistic.round3Result.playerWeapon }}</td>
+      <td>{{ gameStatistic.round4Result.playerWeapon }}</td>
+      <td>{{ gameStatistic.round5Result.playerWeapon }}</td>
     </tr>
     <tr>
-      <td>{{ gameStatistic.opponentSession.nick }}</td>
-      <td>{{ gameStatistic.opponentSession.weaponRound1 }}</td>
-      <td>{{ gameStatistic.opponentSession.weaponRound2 }}</td>
-      <td>{{ gameStatistic.opponentSession.weaponRound3 }}</td>
-      <td>{{ gameStatistic.opponentSession.weaponRound4 }}</td>
-      <td>{{ gameStatistic.opponentSession.weaponRound5 }}</td>
+      <td>{{ gameStatistic.opponentNick }}</td>
+      <td>{{ gameStatistic.round1Result.opponentWeapon }}</td>
+      <td>{{ gameStatistic.round2Result.opponentWeapon }}</td>
+      <td>{{ gameStatistic.round3Result.opponentWeapon }}</td>
+      <td>{{ gameStatistic.round4Result.opponentWeapon }}</td>
+      <td>{{ gameStatistic.round5Result.opponentWeapon }}</td>
+    </tr>
+    <tr>
+      <td>Your result</td>
+      <td>{{ gameStatistic.round1Result.playerResult }}</td>
+      <td>{{ gameStatistic.round2Result.playerResult }}</td>
+      <td>{{ gameStatistic.round3Result.playerResult }}</td>
+      <td>{{ gameStatistic.round4Result.playerResult }}</td>
+      <td>{{ gameStatistic.round5Result.playerResult }}</td>
     </tr>
   </tbody>
 </table>
