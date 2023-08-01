@@ -69,7 +69,7 @@ namespace rock_paper_scissors.Hubs
                 await NotifyPlayerWithRoundResult(playerSession.SessionId, playerWeapon, opponentWeapon.Value);
                 await NotifyPlayerWithRoundResult(opponentSession.SessionId, opponentWeapon.Value, playerWeapon);
 
-                if(_gameService.IsGameFinished(playerSession, opponentSession)){
+                if(_gameService.IsGameFinished(round, playerSession, opponentSession)){
                     await NotifyPlayerWithGameResult(playerSession, opponentSession);
                     await NotifyPlayerWithGameResult(opponentSession, playerSession);
                 }

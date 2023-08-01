@@ -49,8 +49,12 @@ export class GameBoardComponent {
         this.player.score++;
       }
       else{
-        this.opponentScore++;
+        if(playerResult !== 'Draw'){
+          this.opponentScore++;
+        }
+
       }
+
       this.opponentWeapon = opponentWeapon;
       this.game.round++;
       this.game.roundResult = playerResult;

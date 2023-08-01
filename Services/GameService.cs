@@ -5,7 +5,7 @@ namespace rock_paper_scissors.Services
     public interface IGameService
     {
         GameResult GetGameRoundResult(Weapon playerChoice, Weapon opponentChoice);
-        bool IsGameFinished(GameSession playerSession, GameSession opponentSession);
+        bool IsGameFinished(int round, GameSession playerSession, GameSession opponentSession);
         GameResult GetGameResult(GameSession playerSession, GameSession opponentSession);
     }
 
@@ -18,16 +18,13 @@ namespace rock_paper_scissors.Services
                 .result;
         }
 
-        public bool IsGameFinished(GameSession playerSession, GameSession opponentSession)
+        public bool IsGameFinished(int round, GameSession playerSession, GameSession opponentSession)
         {
-          List<GameResult> playerResults = GetPlayerGameResult(playerSession, opponentSession);
-          int draws = playerResults
-                        .Where(r => r == GameResult.Draw).Count();
-
-          if(draws == 5)
-          {
+          if(round == 5) {
             return true;
           }
+
+          List<GameResult> playerResults = GetPlayerGameResult(playerSession, opponentSession);
 
           int playerWins = playerResults
                         .Where(r => r == GameResult.Win).Count();
@@ -39,19 +36,12 @@ namespace rock_paper_scissors.Services
 
         public GameResult GetGameResult(GameSession playerSession, GameSession opponentSession)
         {
-            List<GameResult> playerResults = GetPlayerGameResult(playerSession, opponentSession);
-            int draws = playerResults
-                        .Where(r => r == GameResult.Draw).Count();
-
-            if(draws == 5)
-            {
-              return GameResult.Draw;
-            }
-
-            int playerScore = playerResults
+            int playerScore = GetPlayerGameResult(playerSession, opponentSession)
+                        .Where(r => r == GameResult.Win).Count();
+            int oppositeWins = GetPlayerGameResult(opponentSession, playerSession)
                         .Where(r => r == GameResult.Win).Count();
 
-            return playerScore >= 3 ? GameResult.Win : GameResult.Lose;
+            return playerScore == oppositeWins ? GameResult.Draw: playerScore > oppositeWins? GameResult.Win : GameResult.Lose;
         }
 
         private List<GameResult> GetPlayerGameResult(GameSession playerSession, GameSession opponentSession) {
